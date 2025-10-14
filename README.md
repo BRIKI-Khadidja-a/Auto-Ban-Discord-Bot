@@ -32,14 +32,7 @@ DISCORD_TOKEN=your_bot_token_here
 # ID du canal à protéger (obligatoire)
 PROTECTED_CHANNEL_ID=123456789012345678
 
-# Préfixe des commandes (optionnel)
-BOT_PREFIX=!
 
-# Message d'avertissement personnalisé (optionnel)
-WARNING_MESSAGE=⚠️ **ATTENTION** ⚠️
-Ce canal est protégé ! Ne postez **AUCUN** message ici.
-Toute personne qui envoie un message sera **bannie automatiquement**.
-🔒 Canal en lecture seule
 ```
 
 ### Obtenir l'ID d'un canal
