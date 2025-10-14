@@ -55,17 +55,17 @@ bot_stats = {
 
 @bot.event
 async def on_ready():
-    logger.info(f"✅ Connecté en tant que {bot.user} (ID: {bot.user.id})")
-    logger.info(f"📊 Servant {len(bot.guilds)} serveur(s)")
-    logger.info("💬 Bot prêt à surveiller le canal protégé !")
+    logger.info(f" Connecté en tant que {bot.user} (ID: {bot.user.id})")
+    logger.info(f" Servant {len(bot.guilds)} serveur(s)")
+    logger.info(" Bot prêt à surveiller le canal protégé !")
 
     # Envoie un message d'avertissement dans le canal protégé
     channel = bot.get_channel(PROTECTED_CHANNEL_ID)
     if channel:
         try:
             embed = discord.Embed(
-                title="🚨 CANAL PROTÉGÉ 🚨",
-                description="⚠️ **ATTENTION** ⚠️\n\nCe canal est protégé ! Ne postez **AUCUN** message ici.\nToute personne qui envoie un message sera **bannie automatiquement**.\n\n🔒 Canal en lecture seule",
+                title=" CANAL PROTÉGÉ ",
+                description=" **ATTENTION** \n\nCe canal est protégé ! Ne postez **AUCUN** message ici.\nToute personne qui envoie un message sera **bannie automatiquement**.\n\n🔒 Canal en lecture seule",
                 color=0xff0000
             )
             embed.set_footer(text="Bot de protection automatique")
@@ -90,7 +90,7 @@ async def on_message(message):
     # Si message dans le canal protégé
     if message.channel.id == PROTECTED_CHANNEL_ID:
         try:
-            logger.warning(f"🚨 {message.author} a envoyé un message dans le canal protégé")
+            logger.warning(f" {message.author} a envoyé un message dans le canal protégé")
             
             # Supprimer le message immédiatement
             await message.delete()
@@ -114,7 +114,7 @@ async def on_message(message):
             # Bannir l'utilisateur
             ban_reason = f"Message dans canal protégé #{message.channel.name} - Protection automatique"
             await message.guild.ban(message.author, reason=ban_reason, delete_message_days=0)
-            logger.warning(f"⛔ {message.author} a été banni du serveur")
+            logger.warning(f" {message.author} a été banni du serveur")
             
             # Mettre à jour les statistiques
             bot_stats["bans_count"] += 1
@@ -124,7 +124,7 @@ async def on_message(message):
             # Envoyer un message de confirmation
             try:
                 embed = discord.Embed(
-                    title="🔒 Action de Protection",
+                    title=" Action de Protection",
                     description=f"**{message.author}** a été banni automatiquement pour avoir posté dans ce canal protégé.",
                     color=0xff0000
                 )
@@ -161,7 +161,7 @@ async def show_stats(ctx):
 async def help_ban(ctx):
     """Affiche l'aide du bot"""
     embed = discord.Embed(
-        title="🤖 Bot de Protection Automatique",
+        title=" Bot de Protection Automatique",
         description="Ce bot protège automatiquement ce canal contre les messages non autorisés.",
         color=0x0099ff
     )
@@ -184,7 +184,7 @@ async def help_ban(ctx):
 async def on_command_error(ctx, error):
     """Gestion des erreurs de commandes"""
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("❌ Permissions insuffisantes pour utiliser cette commande", delete_after=5)
+        await ctx.send(" Permissions insuffisantes pour utiliser cette commande", delete_after=5)
     elif isinstance(error, commands.CommandNotFound):
         pass  # Ignorer les commandes non trouvées
     else:
