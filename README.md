@@ -20,40 +20,7 @@ git clone <votre-repo>
 cd Auto-Ban-Discord-Bot
 ```
 
-### 2. Configuration automatique
-```bash
-python setup.py
-```
 
-### 3. Configuration manuelle
-1. Copiez `env_example.txt` vers `.env`
-2. Remplissez vos informations dans `.env`
-3. Installez les dépendances : `pip install -r requirements.txt`
-
-## ⚙️ Configuration du Bot Discord
-
-### 1. Créer l'application Discord
-1. Allez sur [Discord Developer Portal](https://discord.com/developers/applications)
-2. Cliquez sur "New Application"
-3. Donnez un nom à votre bot
-4. Allez dans l'onglet "Bot"
-5. Cliquez sur "Add Bot"
-6. Copiez le **Token** (gardez-le secret !)
-
-### 2. Permissions requises
-Votre bot doit avoir ces permissions :
-- `BAN_MEMBERS` - Pour bannir les utilisateurs
-- `MANAGE_MESSAGES` - Pour supprimer les messages
-- `READ_MESSAGE_HISTORY` - Pour lire l'historique
-- `SEND_MESSAGES` - Pour envoyer des messages
-- `EMBED_LINKS` - Pour les messages avec embed
-
-### 3. Inviter le bot
-1. Allez dans l'onglet "OAuth2" > "URL Generator"
-2. Cochez "bot" dans les scopes
-3. Cochez les permissions listées ci-dessus
-4. Copiez l'URL générée et ouvrez-la dans votre navigateur
-5. Sélectionnez votre serveur et autorisez le bot
 
 ## 📝 Configuration
 
