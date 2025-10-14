@@ -45,3 +45,7 @@ python bot.py
 
 
 Tester : lorsqu’un utilisateur envoie un message dans le canal protégé → il est automatiquement banni et ses messages récents sont supprimés.
+
+
+
+step2:

@@ -24,6 +24,11 @@ async def on_ready():
     print(f"✅ Connecté en tant que {bot.user} (ID: {bot.user.id})")
     print("💬 Bot prêt à surveiller le canal protégé !")
 
+    # 🔔 Envoie un message d’avertissement dans le canal protégé
+    channel = bot.get_channel(PROTECTED_CHANNEL_ID)
+    if channel:
+        await channel.send("⚠️ **Ne postez aucun message ici — tout message entraînera un bannissement automatique.**")
+
 @bot.event
 async def on_message(message):
     # Ignorer les messages du bot lui-même
@@ -35,8 +40,8 @@ async def on_message(message):
         try:
             print(f"🚨 {message.author} a envoyé un message dans le canal protégé.")
             
-            # Supprimer les messages récents de cet utilisateur
-            async for msg in message.channel.history(limit=100, after=discord.utils.utcnow() - discord.utils.utcnow()):
+            # Supprimer les messages récents de cet utilisateur (5 dernières minutes)
+            async for msg in message.channel.history(limit=100):
                 if msg.author == message.author:
                     await msg.delete()
             
