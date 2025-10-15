@@ -41,12 +41,7 @@ Create a `.env` file at the project root:
 DISCORD_TOKEN=your_bot_token_here
 PROTECTED_CHANNEL_ID=123456789012345678
 
-# Optional
-LOG_CHANNEL_ID=
-CLEANUP_MINUTES=5
-WARNING_MESSAGE=This channel is protected. Do not post here.
-ADMIN_ROLE_ID=
-```
+
 
 How to get a channel ID:
 1. In Discord, open Settings → Advanced → enable Developer Mode.
