@@ -15,6 +15,7 @@ from datetime import datetime, timedelta, timezone
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
+
 # === CONFIGURATION LOGGING ===
 logger = logging.getLogger("AutoBanBot")
 logger.setLevel(logging.INFO)
@@ -24,11 +25,13 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+
 # === CHARGEMENT .env ===
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 PROTECTED_CHANNEL_ID = int(os.getenv("PROTECTED_CHANNEL_ID", 0))
 DELETE_WINDOW_SECONDS = int(os.getenv("DELETE_WINDOW_SECONDS", 300))
+
 
 if not TOKEN:
     logger.error("❌ Token Discord manquant dans .env !")
@@ -37,6 +40,7 @@ if not PROTECTED_CHANNEL_ID:
     logger.error("❌ ID du canal protégé manquant dans .env !")
     exit(1)
 
+
 # === INTENTS DISCORD ===
 intents = discord.Intents.default()
 intents.messages = True
@@ -44,8 +48,10 @@ intents.message_content = True
 intents.guilds = True
 intents.members = True
 
+
 bot = commands.Bot(command_prefix="!", intents=intents)
 bot_stats = {"bans_count": 0, "messages_deleted": 0, "last_ban": None}
+
 
 # === MESSAGE D'AVERTISSEMENT EMBED ===
 def get_protection_embed():
@@ -73,6 +79,7 @@ def get_protection_embed():
     embed.set_footer(text="Bot de protection automatique • Serveur sécurisé")
     return embed
 
+
 # === ÉVÉNEMENT DE CONNEXION ===
 @bot.event
 async def on_ready():
@@ -84,6 +91,7 @@ async def on_ready():
     await channel.send(embed=get_protection_embed())
     logger.info("✅ Message d’avertissement affiché")
 
+
 # === SURVEILLANCE DU CANAL ===
 @bot.event
 async def on_message(message: discord.Message):
@@ -92,6 +100,7 @@ async def on_message(message: discord.Message):
     await bot.process_commands(message)
     if message.channel.id != PROTECTED_CHANNEL_ID:
         return
+
 
     logger.warning(f"🚨 Message détecté dans le canal protégé par {message.author}")
     if not message.guild.me.guild_permissions.ban_members:
@@ -105,12 +114,14 @@ async def on_message(message: discord.Message):
             pass
         return
 
+
     # SUPPRESSION IMMEDIATE DU MESSAGE
     try:
         await message.delete()
         logger.info(f"✅ Message supprimé de {message.author}")
     except Exception as e:
         logger.error(f"Erreur suppression message : {e}")
+
 
     # SUPPRESSION MESSAGES RÉCENTS
     five_minutes_ago = datetime.now(timezone.utc) - timedelta(seconds=DELETE_WINDOW_SECONDS)
@@ -129,6 +140,7 @@ async def on_message(message: discord.Message):
     except Exception as e:
         logger.error(f"Erreur durant le nettoyage : {e}")
 
+
     # BANNISSEMENT
     try:
         ban_reason = f"Message dans canal protégé #{message.channel.name}"
@@ -136,6 +148,7 @@ async def on_message(message: discord.Message):
         bot_stats["bans_count"] += 1
         bot_stats["messages_deleted"] += deleted_count
         bot_stats["last_ban"] = datetime.now(timezone.utc).isoformat()
+
 
         embed = discord.Embed(
             title="🔒 Utilisateur banni automatiquement",
@@ -151,15 +164,20 @@ async def on_message(message: discord.Message):
     except Exception as e:
         logger.error(f"Erreur bannissement : {e}")
 
+
 # === SURVEILLANCE REJOINT MEMBRES BANNNIS ===
 @bot.event
 async def on_member_join(member):
-    banned_ids = [b.user.id for b in await member.guild.bans()]
+    logger.info(f"👋 Member joined: {member} (ID: {member.id})")  # Log affichage ajoutée
+    
+
+    banned_ids = [b.user.id async for b in member.guild.bans()]
     if member.id in banned_ids:
         await member.guild.ban(member, reason="Tentative de retour après bannissement")
         logger.warning(f"🚫 {member} re-banni à la reconnexion")
     else:
         logger.info(f"👋 Nouveau membre autorisé : {member}")
+
 
 # === COMMANDES ADMIN ===
 @bot.command(name="stats")
@@ -170,6 +188,7 @@ async def show_stats(ctx):
     embed.add_field(name="Messages supprimés", value=bot_stats["messages_deleted"])
     embed.add_field(name="Dernier ban", value=bot_stats["last_ban"] or "Aucun")
     await ctx.send(embed=embed)
+
 
 # === LANCEMENT ===
 if __name__ == "__main__":
