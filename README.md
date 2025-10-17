@@ -39,7 +39,7 @@ Create a `.env` file at the project root:
 ```env
 # Required
 DISCORD_TOKEN=your_bot_token_here
-PROTECTED_CHANNEL_ID=123456789012345678
+PROTECTED_CHANNEL_ID=1427761223117701234
 DELETE_WINDOW_SECONDS=300
 
 
@@ -80,6 +80,22 @@ python bot.py
 Make sure the bot’s role has permission to view the protected channel and to ban members.
 
 ---
+
+
+## 🗂️ Logging (Logs)
+
+- This bot uses a **daily rotating log system** (one `.log` file per day) stored in the `logs/` directory at the project root.
+- Logs record important actions: connections, detected messages, deletions, bans, and errors.
+- The `logs/` directory is created automatically when the bot starts if it does not exist.
+- To review logs, navigate to the `logs/` folder and open the current day's log file, for example, `autoban.log`.
+- Log rotation ensures log files do not grow too large.
+
+### Why is logging important?
+
+- It facilitates auditing of the bot's automatic actions.
+- Useful for troubleshooting errors or unexpected behavior.
+- Improves traceability of moderation on your server.
+
 
 ## 🧪 Usage
 
