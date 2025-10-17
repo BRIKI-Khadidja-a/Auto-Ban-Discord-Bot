@@ -40,13 +40,9 @@ Create a `.env` file at the project root:
 # Required
 DISCORD_TOKEN=your_bot_token_here
 PROTECTED_CHANNEL_ID=123456789012345678
+DELETE_WINDOW_SECONDS=300
 
-# Optional
-LOG_CHANNEL_ID=
-CLEANUP_MINUTES=5
-WARNING_MESSAGE=This channel is protected. Do not post here.
-ADMIN_ROLE_ID=
-```
+
 
 How to get a channel ID:
 1. In Discord, open Settings → Advanced → enable Developer Mode.
@@ -57,8 +53,6 @@ How to get a channel ID:
 ```bash
 python -m venv .venv
 # Windows PowerShell
-.\.venv\Scripts\Activate.ps1
-# macOS/Linux
 source .venv/bin/activate
 ```
 
@@ -124,23 +118,8 @@ Refer to your command list (slash or prefix) if available in the code.
 
 ---
 
-## 📦 Optional: Docker (if you include a Dockerfile)
-```bash
-docker build -t auto-ban-discord-bot .
-docker run --env-file ./.env --name auto-ban-bot --restart unless-stopped auto-ban-discord-bot
-```
 
----
+## 📝 THANK YOU
 
-## 🤝 Contributing
 
-Issues and pull requests are welcome. Please:
-- Keep descriptions clear and provide steps to reproduce
-- Follow the existing style and add/update tests when relevant
-
----
-
-## 📝 License
-
-Add your license file (e.g., MIT) and reference it here.
 
